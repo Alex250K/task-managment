@@ -1,0 +1,226 @@
+﻿@page "/"
+@using TaskManager1
+@inject TaskService TaskService
+
+@if (!showApp)
+{
+    <div style="text-align: center; margin-top: 100px;">
+        <h1 style="font-size: 3em; color: #007bff;">TaskManager Pro</h1>
+        <button @onclick="StartApp" class="btn btn-success">Comenzar</button>
+    </div>
+}
+else
+{
+    <div class="main">
+        <ul class="d-flex flex-row justify-content-between main-list">
+            <li>
+                <div class="state_task state_task_pending">
+                    <h2 class="state_task-title">Pendientes</h2>
+                </div>
+                <ul class="main-content">
+                    @foreach (var task in FilteredPending.OrderByDescending(t => t.CreatedAt))
+                    {
+                        <li class="task" @onclick="() => EditTodoItem(task)">
+                            @task.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <div class="state_task state_task_process">
+                    <h2 class="state_task-title">En proceso</h2>
+                </div>
+                <ul class="main-content">
+                    @foreach (var task in FilteredProcess.OrderByDescending(t => t.CreatedAt))
+                    {
+                        <li class="task" @onclick="() => EditTodoItem(task)">
+                            @task.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <div class="state_task state_task_revision">
+                    <h2 class="state_task-title">En revision</h2>
+                </div>
+                <ul class="main-content">
+                    @foreach (var task in FilteredRevision.OrderByDescending(t => t.CreatedAt))
+                    {
+                        <li class="task" @onclick="() => EditTodoItem(task)">
+                            @task.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <div class="state_task state_task_complete">
+                    <h2 class="state_task-title">Completadas</h2>
+                </div>
+                <ul class="main-content">
+                    @foreach (var task in FilteredCompleted.OrderByDescending(t => t.CreatedAt))
+                    {
+                        <li class="task" @onclick="() => EditTodoItem(task)">
+                            @task.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <div class="state_task state_task_cancel">
+                    <h2 class="state_task-title">Canceladas</h2>
+                </div>
+                <ul class="main-content">
+                    @foreach (var task in FilteredCanceled.OrderByDescending(t => t.CreatedAt))
+                    {
+                        <li class="task" @onclick="() => EditTodoItem(task)">
+                            @task.Title
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+
+        @if (modal)
+        {
+            <div class="modal-context">
+                <div class="modal-form">
+                    <div class="close" @onclick="()=> modal = false">
+                        X
+                    </div>
+                    <div class="d-flex flex-column p-4 gap-3 mt-4">
+                        <div class="d-flex justify-content-between align-content-center">
+                            <input @bind="modalTitle" @onkeypress="HandleKeyPress" class="form-control input-title" placeholder="Edita tarea" />
+                            <span>@modalCreatedAt.ToShortDateString()</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex flex-row gap-2">
+                                <select @bind="modalStatus" class="form-select input-select">
+                                    <option value="Pending">Pendiente</option>
+                                    <option value="Process">En proceso</option>
+                                    <option value="Revision">Revision</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Canceled">Cancelada</option>
+                                </select>
+                                <select @bind="modalImportance" class="form-select input-select">
+                                    <option>Alta</option>
+                                    <option>Media</option>
+                                    <option>Baja</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        @if (modalStatus == "Canceled")
+                        {
+                            <p class="alert alert-danger">Si cancela la tarea no podras volver a cambiar de estado !!</p>
+                        }
+                        <div class="d-flex flex-row gap-4">
+                            <button @onclick="UpdateTask" class="btn btn-success">Actualizar</button>
+                            <button class="btn btn-danger" @onclick="()=>modal = false">Cancelar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+}
+
+@code {
+    private bool modal = false;
+
+    private string GetTaskCssClass(Task task)
+    {
+        return task.IsCompleted ? "completed-task" : "pending-task";
+    }
+
+
+    private List<TodoItem> tasks = new();
+
+    private string modalTitle { get; set; } = string.Empty;
+    private string modalStatus { get; set; } = "Pending";
+    private string modalUserName { get; set; } = string.Empty;
+    private DateTime modalCreatedAt { get; set; } = DateTime.Now;
+    private string modalImportance { get; set; } = "Media"; // Alta, Media, Baja
+
+
+    private string newTask = "";
+    private string importanceLevel = "Media";
+    private string status = "Pending";
+    private bool showApp = false;
+
+    private string filterImportance = "";
+    private string filterStatus = "";
+
+    private IEnumerable<TodoItem> FilteredPending =>
+        tasks.Where(t => t.Status == "Pending");
+
+    private IEnumerable<TodoItem> FilteredProcess =>
+    tasks.Where(t => t.Status == "Process");
+
+    private IEnumerable<TodoItem> FilteredRevision =>
+        tasks.Where(t => t.Status == "Revision");
+
+    private IEnumerable<TodoItem> FilteredCompleted =>
+    tasks.Where(t => t.Status == "Completed");
+
+    private IEnumerable<TodoItem> FilteredCanceled =>
+        tasks.Where(t => t.Status == "Canceled");
+
+    private void StartApp() => showApp = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tasks = await TaskService.LoadTasksAsync();
+    }
+
+    private async void EditTodoItem(TodoItem todoItem)
+    {
+        modalTitle = todoItem.Title;
+        modalStatus = todoItem.Status;
+        modalUserName = todoItem.UserName;
+        modalCreatedAt = todoItem.CreatedAt;
+        modalImportance = todoItem.Importance;
+        modal = true;
+    }
+    private async Task AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            tasks.Add(new TodoItem { Title = newTask.Trim(), Importance = importanceLevel, Status = status });
+            await SaveTasks();
+        }
+    }
+
+    private async Task RemoveTask(TodoItem task)
+    {
+        tasks.Remove(task);
+        await SaveTasks();
+    }
+
+    private async Task SaveTasks() => await TaskService.SaveTasksAsync(tasks);
+
+    private async void UpdateTask ()
+    {   
+        tasks.RemoveAll((task) => modalCreatedAt == task.CreatedAt);
+        tasks.Add(new TodoItem()
+        {
+           Title= modalTitle,
+           Status= modalStatus,
+           CreatedAt=modalCreatedAt,
+           Importance=modalImportance,
+           UserName=modalUserName
+        });
+        modal = false;
+        await TaskService.SaveTasksAsync(tasks);
+    }
+    
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await AddTask();
+        }
+    }
+}
