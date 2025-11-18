@@ -13,66 +13,66 @@ else
 {
     <div class="main">
         <ul class="d-flex flex-row justify-content-between main-list">
-            <li>
+            <li id="state-task-Pending">
                 <div class="state_task state_task_pending">
                     <h2 class="state_task-title">Pendientes</h2>
                 </div>
-                <ul class="main-content">
+                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredPending.OrderByDescending(t => t.CreatedAt))
                     {
-                        <li class="task" @onclick="() => EditTodoItem(task)">
+                        <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
                             @task.Title
                         </li>
                     }
                 </ul>
             </li>
-            <li>
+            <li id="state-task-Process">
                 <div class="state_task state_task_process">
                     <h2 class="state_task-title">En proceso</h2>
                 </div>
-                <ul class="main-content">
+                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredProcess.OrderByDescending(t => t.CreatedAt))
                     {
-                        <li class="task" @onclick="() => EditTodoItem(task)">
+                        <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
                             @task.Title
                         </li>
                     }
                 </ul>
             </li>
-            <li>
+            <li id="state-task-Revision">
                 <div class="state_task state_task_revision">
                     <h2 class="state_task-title">En revision</h2>
                 </div>
-                <ul class="main-content">
+                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredRevision.OrderByDescending(t => t.CreatedAt))
                     {
-                        <li class="task" @onclick="() => EditTodoItem(task)">
+                        <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
                             @task.Title
                         </li>
                     }
                 </ul>
             </li>
-            <li>
+            <li id="state-task-Completed">
                 <div class="state_task state_task_complete">
                     <h2 class="state_task-title">Completadas</h2>
                 </div>
-                <ul class="main-content">
+                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredCompleted.OrderByDescending(t => t.CreatedAt))
                     {
-                        <li class="task" @onclick="() => EditTodoItem(task)">
+                        <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
                             @task.Title
                         </li>
                     }
                 </ul>
             </li>
-            <li>
+            <li id="state-task-Canceled">
                 <div class="state_task state_task_cancel">
                     <h2 class="state_task-title">Canceladas</h2>
                 </div>
-                <ul class="main-content">
+                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredCanceled.OrderByDescending(t => t.CreatedAt))
                     {
-                        <li class="task" @onclick="() => EditTodoItem(task)">
+                        <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
                             @task.Title
                         </li>
                     }
@@ -84,7 +84,7 @@ else
         {
             <div class="modal-context">
                 <div class="modal-form">
-                    <div class="close" @onclick="()=> modal = false">
+                    <div class="close" @onclick="() => modal = false">
                         X
                     </div>
                     <div class="d-flex flex-column p-4 gap-3 mt-4">
@@ -115,7 +115,7 @@ else
                         }
                         <div class="d-flex flex-row gap-4">
                             <button @onclick="UpdateTask" class="btn btn-success">Actualizar</button>
-                            <button class="btn btn-danger" @onclick="()=>modal = false">Cancelar</button>
+                            <button class="btn btn-danger" @onclick="() => modal = false">Cancelar</button>
                         </div>
 
                     </div>
@@ -123,12 +123,57 @@ else
             </div>
         }
 
+        <button class="btn btn-info btn-float" @onclick="() => modalAddForm = true">
+            +
+        </button>
 
+        @if (modalAddForm)
+        {
+            <div class="modal-context">
+                <div class="modal-form">
+                    <div class="close" @onclick="() => modalAddForm = false">
+                        X
+                    </div>
+                    <div class="d-flex flex-column p-4 gap-3 mt-4">
+                        <div class="d-flex justify-content-between align-content-center">
+                            <input @bind="modalNewTitle" @onkeypress="HandleKeyPress" class="form-control input-title-add-task" placeholder="Titulo tarea" />
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="d-flex flex-row gap-2">
+                                <select @bind="modalNewStatus" class="form-select input-select">
+                                    <option value="Pending">Pendiente</option>
+                                    <option value="Process">En proceso</option>
+                                    <option value="Revision">Revision</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Canceled">Cancelada</option>
+                                </select>
+                                <select @bind="modalNewImportance" class="form-select input-select">
+                                    <option>Alta</option>
+                                    <option>Media</option>
+                                    <option>Baja</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        @if (modalStatus == "Canceled")
+                        {
+                            <p class="alert alert-danger">Si cancela la tarea no podras volver a cambiar de estado !!</p>
+                        }
+                        <div class="d-flex flex-row gap-4">
+                            <button @onclick="AddTask" class="btn btn-success">Agregar tarea</button>
+                            <button class="btn btn-danger" @onclick="() => modalAddForm = false">Cancelar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 }
 
 @code {
     private bool modal = false;
+    private bool modalAddForm = false;
 
     private string GetTaskCssClass(Task task)
     {
@@ -144,6 +189,11 @@ else
     private DateTime modalCreatedAt { get; set; } = DateTime.Now;
     private string modalImportance { get; set; } = "Media"; // Alta, Media, Baja
 
+    private string modalNewTitle { get; set; } = string.Empty;
+    private string modalNewStatus { get; set; } = "Pending";
+    private string modalNewUserName { get; set; } = string.Empty;
+    //private DateTime modalCreatedAt { get; set; } = DateTime.Now;
+    private string modalNewImportance { get; set; } = "Media"; // Alta, Media, Baja
 
     private string newTask = "";
     private string importanceLevel = "Media";
@@ -186,10 +236,11 @@ else
     }
     private async Task AddTask()
     {
-        if (!string.IsNullOrWhiteSpace(newTask))
+        if (!string.IsNullOrWhiteSpace(modalNewTitle))
         {
-            tasks.Add(new TodoItem { Title = newTask.Trim(), Importance = importanceLevel, Status = status });
+            tasks.Add(new TodoItem { Title = modalNewTitle.Trim(), Importance = modalNewImportance, Status = modalNewStatus });
             await SaveTasks();
+            modalAddForm = false;
         }
     }
 
@@ -201,21 +252,21 @@ else
 
     private async Task SaveTasks() => await TaskService.SaveTasksAsync(tasks);
 
-    private async void UpdateTask ()
-    {   
+    private async void UpdateTask()
+    {
         tasks.RemoveAll((task) => modalCreatedAt == task.CreatedAt);
         tasks.Add(new TodoItem()
         {
-           Title= modalTitle,
-           Status= modalStatus,
-           CreatedAt=modalCreatedAt,
-           Importance=modalImportance,
-           UserName=modalUserName
+            Title = modalTitle,
+            Status = modalStatus,
+            CreatedAt = modalCreatedAt,
+            Importance = modalImportance,
+            UserName = modalUserName
         });
         modal = false;
         await TaskService.SaveTasksAsync(tasks);
     }
-    
+
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -223,4 +274,48 @@ else
             await AddTask();
         }
     }
+    private async Task HandleDrop(DragEventArgs e){
+        
+        // long id = long.Parse(ev.DataTransfer.Items[0].Kind);
+        // TodoItem currentTask = tasks.First((task) => task.Id == id);
+
+        // modalTitle = currentTask.Title;
+        // modalStatus = currentTask.Status;
+        // modalCreatedAt = currentTask.CreatedAt;
+        // modalImportance = currentTask.Importance;
+        // modalUserName = currentTask.UserName;
+        // UpdateTask();
+    }
 }
+<script>
+     function dropHandler(ev) {
+        //Pasar logica a DropHandler - Blazor para actualzar la lista desde la misma.
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("id");
+      // const { id:statusId } = ev.target.parentElement;
+      // const tasks = JSON.parse(localStorage.getItem("tasks"));
+      // const currentTask = tasks.filter(({ id }) =>  data == id)[0];
+      // const newTasks = tasks.filter(({ id }) =>  data != id);
+      // currentTask.status = statusId.split('-')[2];
+      // newTasks.push(currentTask);
+      // localStorage.removeItem('tasks');
+      // localStorage.setItem('tasks',JSON.stringify(newTasks));
+      ev.target.appendChild(document.getElementById(data));
+    }
+        
+       const $mainContent = document.querySelectorAll('.main-content');
+       console.log($mainContent);
+       $mainContent.forEach(($item)=>{
+            console.log({$item});
+            $item.addEventListener('drop',dropHandler)
+        });
+           function dragstartHandler(ev) {
+               ev.dataTransfer.setData("id", ev.target.id);
+           }
+
+    function dragoverHandler(ev) {
+      ev.preventDefault();
+    }
+    
+   
+</script>

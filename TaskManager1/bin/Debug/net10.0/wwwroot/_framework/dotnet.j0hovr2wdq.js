@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TaskManager1",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-r5csj5M8OkCzfEBXfDTJ3fgkQlQ3wcmNna554qVxyUw=",
+    "hash": "sha256-2yhui0nGfQkHRDyRvloEnzwBOiBjfCtNwvb+BZ7nixY=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -1234,15 +1234,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TaskManager1.wasm",
-        "name": "TaskManager1.zszryvr19t.wasm",
-        "integrity": "sha256-/ePYtq6iRk+1nv6oOLZs4h83yqc5xn8Fsk+sqPGpJkg="
+        "name": "TaskManager1.4aeji1kx7e.wasm",
+        "integrity": "sha256-9LqXYeOAsxKcVf+bd37SGxjT/xY4CRfJi0f9qQ8cDfg="
       }
     ],
     "pdb": [
       {
         "virtualPath": "TaskManager1.pdb",
-        "name": "TaskManager1.uimy4of2df.pdb",
-        "integrity": "sha256-hvpFPVefLtdEGswDwRszdFrD25o0I1KKDT7cmSx0ZwA="
+        "name": "TaskManager1.4q4kljf1hi.pdb",
+        "integrity": "sha256-FBokPeZCJdzMY84nVyDJpZ601eY6rxX2fgLr83el5wA="
       }
     ],
     "libraryInitializers": [

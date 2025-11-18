@@ -239,13 +239,19 @@ body:has(.modal-context){
     z-index: 200;
     position: absolute;
     border-radius: 1rem;
-    max-height: 100%
+    max-height: 100%;
+    box-shadow:0px 0px 6px gray;   
 }
 .input-title {
     background-color: transparent;
     border: 0px solid transparent;
     width:80%;
     color:whitesmoke;
+}
+.input-title-add-task {
+    border: 0px solid transparent;
+    width: 80%;
+    color: black;
 }
 .input-select {
     width: 10rem;
@@ -255,4 +261,13 @@ body:has(.modal-context){
 .alert-danger{
     padding:0.2rem;
     width:fit-content;
+}
+.btn-float{
+    border-radius:100%;
+    width:3rem;
+    height:3rem;
+    font-size:1.5rem;
+    position:fixed;
+    right:0.5rem;
+    bottom:4rem;
 }
