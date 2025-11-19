@@ -17,11 +17,13 @@ else
                 <div class="state_task state_task_pending">
                     <h2 class="state_task-title">Pendientes</h2>
                 </div>
-                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
+                <ul class="main-content" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredPending.OrderByDescending(t => t.CreatedAt))
                     {
                         <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
-                            @task.Title
+                            <span>@task.Title</span>
+                            <div class="level-@task.Importance">
+                            </div>
                         </li>
                     }
                 </ul>
@@ -30,11 +32,13 @@ else
                 <div class="state_task state_task_process">
                     <h2 class="state_task-title">En proceso</h2>
                 </div>
-                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
+                <ul class="main-content" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredProcess.OrderByDescending(t => t.CreatedAt))
                     {
                         <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
-                            @task.Title
+                            <span>@task.Title</span>
+                            <div class="level-@task.Importance">
+                            </div>
                         </li>
                     }
                 </ul>
@@ -43,11 +47,13 @@ else
                 <div class="state_task state_task_revision">
                     <h2 class="state_task-title">En revision</h2>
                 </div>
-                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
+                <ul class="main-content" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredRevision.OrderByDescending(t => t.CreatedAt))
                     {
                         <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
-                            @task.Title
+                            <span>@task.Title</span>
+                            <div class="level-@task.Importance">
+                            </div>
                         </li>
                     }
                 </ul>
@@ -56,11 +62,13 @@ else
                 <div class="state_task state_task_complete">
                     <h2 class="state_task-title">Completadas</h2>
                 </div>
-                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
+                <ul class="main-content" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredCompleted.OrderByDescending(t => t.CreatedAt))
                     {
                         <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
-                            @task.Title
+                            <span>@task.Title</span>
+                            <div class="level-@task.Importance">
+                            </div>
                         </li>
                     }
                 </ul>
@@ -69,11 +77,14 @@ else
                 <div class="state_task state_task_cancel">
                     <h2 class="state_task-title">Canceladas</h2>
                 </div>
-                <ul class="main-content" @ondrop="HandleDrop" ondragover="dragoverHandler(event)">
+                <ul class="main-content"  ondragover="dragoverHandler(event)">
                     @foreach (var task in FilteredCanceled.OrderByDescending(t => t.CreatedAt))
                     {
                         <li class="task" @onclick="() => EditTodoItem(task)" draggable="true" ondragstart="dragstartHandler(event)" id="@task.Id">
-                            @task.Title
+                            <span>@task.Title</span>
+                            <div class="level-@task.Importance">
+
+                            </div>
                         </li>
                     }
                 </ul>

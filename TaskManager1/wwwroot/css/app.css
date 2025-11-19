@@ -207,9 +207,12 @@ code {
 
 .task {
     background-color: aliceblue;
-    padding:0.3rem;
-    border-radius:0.5rem;
-    cursor:pointer;
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .modal-context{
     position:fixed;
@@ -262,7 +265,7 @@ body:has(.modal-context){
     padding:0.2rem;
     width:fit-content;
 }
-.btn-float{
+.btn-float {
     border-radius:100%;
     width:3rem;
     height:3rem;
@@ -270,4 +273,18 @@ body:has(.modal-context){
     position:fixed;
     right:0.5rem;
     bottom:4rem;
+}
+.level-Media, .level-Baja, .level-Alta {
+    width: 2.5rem;
+    height:0.75rem;
+    border-radius:0.3rem;
+}
+.level-Baja {
+    background: linear-gradient(45deg, skyblue, #418fb0);
+}
+.level-Media {
+    background: linear-gradient(45deg,#26b050, #edb20e);
+}
+.level-Alta {
+    background: linear-gradient(45deg,#edb20e,red);
 }
