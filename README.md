@@ -1,5 +1,5 @@
 # TaskManager1 Pro - Gestor de Tareas Interactivo
-🧠 Descripción del Proyecto
+🧠 **Descripción del Proyecto:** 
 TaskManager1 es una aplicación web desarrollada con Blazor WebAssembly, diseñada para gestionar tareas de forma eficiente. Utiliza componentes Razor, interoperabilidad con JavaScript y una estructura modular que facilita la escalabilidad y el mantenimiento.
 
 ![Blazor](https://img.shields.io/badge/.NET-8.0-blue)
