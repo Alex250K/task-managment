@@ -1,6 +1,6 @@
-# Task Manager - Gestor de Tareas Interactivo
-
-Una aplicación web moderna y responsiva construida con **Blazor WebAssembly** para gestionar tareas de forma eficiente. Perfecta como proyecto de aprendizaje en .NET.
+# TaskManager1 - Gestor de Tareas Interactivo
+🧠 Descripción del Proyecto
+TaskManager1 es una aplicación web desarrollada con Blazor WebAssembly, diseñada para gestionar tareas de forma eficiente. Utiliza componentes Razor, interoperabilidad con JavaScript y una estructura modular que facilita la escalabilidad y el mantenimiento.
 
 ![Blazor](https://img.shields.io/badge/.NET-8.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -9,7 +9,7 @@ Una aplicación web moderna y responsiva construida con **Blazor WebAssembly** p
 ## Características Principales
 
 ✓ **Crear tareas** - Agrega nuevas tareas con un solo clic o presionando Enter  
-✓ **Marcar completadas** - Marca tareas como completadas con un checkbox  
+✓ **Marcar completadas** - Selecciona la opcion de la lista desplegable 
 ✓ **Eliminar tareas** - Elimina tareas que ya no necesites  
 ✓ **Estadísticas en tiempo real** - Visualiza el total, completadas y pendientes  
 ✓ **Interfaz moderna** - Diseño limpio, responsivo y profesional  
@@ -65,21 +65,56 @@ La aplicación estará disponible en: `https://localhost:7001`
 ## Estructura del Proyecto
 
 \`\`\`
-TaskManager/
+TaskManager1/
+```
+│
+├── Dependencies/                  # Referencias externas necesarias para compilar y ejecutar el proyecto
+│   ├── Connected Services/       # Servicios conectados como APIs externas o Azure
+│   ├── Analyzers/                # Herramientas que analizan el código para mejorar calidad y estilo
+│   ├── Frameworks/               # Frameworks base como .NET Core o ASP.NET
+│   └── Packages/                 # Paquetes NuGet instalados (como Entity Framework, etc.)
+│
+├── Properties/
+│   └── launchSettings.json       # Configuración de perfiles de ejecución (puertos, entorno, etc.)
+│
+├── wwwroot/                      # Carpeta pública para archivos estáticos
+│   └── sample-data/              # Datos de ejemplo y recursos visuales
+│       ├── ChartUsBlazorInterop.js  # Script JS para interoperabilidad con Blazor (gráficas, etc.)
+│       ├── favicon.png              # Ícono del sitio web
+│       ├── icon-192.png             # Ícono para dispositivos móviles
+│       └── index.html               # Página HTML base (usualmente para SPA o pruebas)
+│
+├── Layout/
+│   └── MainLayout.razor          # Componente de diseño principal (estructura de la interfaz)
+│
 ├── Pages/
-│   └── Index.razor                 # Página principal con toda la lógica
-├── Shared/
-│   └── MainLayout.razor            # Layout base de la aplicación
-├── wwwroot/
-│   ├── index.html                  # Página HTML principal
-│   └── css/
-│       └── app.css                 # Estilos principales
-├── App.razor                       # Componente raíz
-├── Program.cs                      # Configuración de la aplicación
-├── TaskManager.csproj              # Archivo de configuración del proyecto
-├── README.md                       # Este archivo
-└── .gitignore                      # Archivos ignorados por Git
-\`\`\`
+│   ├── StatusEnum.cs             # Enumeración para estados de tareas (ej. Pendiente, Completado)
+│   └── TodoItem.cs               # Modelo de datos para una tarea (título, estado, fecha, etc.)
+│
+├── Services/
+│   ├── App.razor                 # Punto de entrada de la aplicación Blazor
+│   ├── libman.json               # Configuración de librerías externas (JS, CSS) vía LibMan
+│   ├── msbuild.binlog            # Archivo de registro de compilación (útil para depuración)
+│   ├── Program.cs                # Configuración inicial del host y servicios (como DI, rutas)
+│
+└── (Otros archivos del proyecto)
+```
+
+🚀 Cómo Ejecutar el Proyecto
+1. Abre el proyecto en Visual Studio 2022 o superior.
+
+2. Asegúrate de tener instalado el SDK de .NET 6 o .NET 7.
+
+3. Ejecuta el proyecto en modo Debug o Release.
+
+4. Accede a la aplicación en tu navegador en https://localhost:5001.
+
+📦 Dependencias Clave
+1. Blazor WebAssembly
+
+2. LibMan para gestión de librerías JS
+
+3. Interop JS para gráficos (ChartUsBlazorInterop.js)
 
 ## Cómo Usar la Aplicación
 
@@ -91,8 +126,8 @@ TaskManager/
 
 ### Marcar como Completada
 
-- Haz clic en el **checkbox** a la izquierda de la tarea
-- La tarea se marcará con una línea gris (completada)
+- Selecciona el campo completada de la lista desplegable
+- La tarea posicionara en la columna correspondiente al estado Completada
 
 ### Eliminar una Tarea
 
@@ -108,7 +143,33 @@ TaskManager/
 
 ## Captura de Pantalla
 
-[Aquí irían capturas de pantalla de la aplicación funcionando]
+<img width="1890" height="413" alt="image" src="https://github.com/user-attachments/assets/a749f116-4d6d-4087-b2e1-5d8da871ea43" />
+
+
+📌 Funcionalidades
+
+Crear, editar y eliminar tareas
+
+Visualizar estados mediante enumeraciones
+
+<img width="1553" height="507" alt="image" src="https://github.com/user-attachments/assets/70c02a01-1654-4d30-8364-58c1fbd0c490" />
+
+
+Interfaz modular con diseño adaptable
+
+Integración con gráficos JS para visualización de datos
+##DIAGRAMA DE ARQUITECTURA
+
+<img width="501" height="343" alt="image" src="https://github.com/user-attachments/assets/1508682b-42a3-425c-a900-ef47451145d9" />
+
+Este diagrama muestra cómo se conectan los componentes clave de la aplicación Blazor WebAssembly:
+- App.razor como punto de entrada
+- MainLayout.razor como diseño base
+- Pages y Services como módulos funcionales
+- Program.cs como configuración del host
+- wwwroot como carpeta de recursos públicos
+
+Todo esto se comunica a través de la web con el servidor ASP.NET Core, formando una arquitectura moderna y eficiente.
 
 ## Funcionalidades Futuras
 
