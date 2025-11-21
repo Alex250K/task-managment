@@ -219,4 +219,4 @@ Si encuentras problemas:
 
 ---
 
-**¡Gracias por usar Task Manager!** Si te fue útil, considera dejar una ⭐
+**¡Gracias por usar TaskManager Pro!** Si te fue útil, considera dejar una ⭐
