@@ -1,0 +1,90 @@
+name: Deploy to Azure App Service
+
+# Este workflow despliega a Azure App Service
+# Para usarlo, necesitas configurar los siguientes secrets en GitHub:
+# - AZURE_WEBAPP_PUBLISH_PROFILE: El perfil de publicación de tu Azure Web App
+# O alternativamente:
+# - AZURE_CREDENTIALS: Las credenciales de Azure (Service Principal)
+# - AZURE_WEBAPP_NAME: El nombre de tu Web App en Azure
+
+on:
+  # Comentar las siguientes líneas hasta que estés listo para usarlo
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: 'taskmanager-app'
+  AZURE_WEBAPP_PACKAGE_PATH: './TaskManager1'
+  DOTNET_VERSION: '10.0.x'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Application
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/TaskManager1.csproj
+
+      - name: Build
+        run: dotnet build ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/TaskManager1.csproj --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/TaskManager1.csproj --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
+
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: blazor-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Deploy to Azure App Service
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: blazor-app
+
+      # Opción 1: Desplegar usando Publish Profile
+      - name: Deploy to Azure Web App (Publish Profile)
+        id: deploy-to-webapp
+        if: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE != '' }}
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
+
+      # Opción 2: Desplegar usando Azure Credentials
+      - name: Azure Login
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App (Azure Credentials)
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: .
+
+      - name: Azure Logout
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        run: az logout

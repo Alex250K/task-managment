@@ -171,6 +171,45 @@ Este diagrama muestra cómo se conectan los componentes clave de la aplicación 
 
 Todo esto se comunica a través de la web con el servidor ASP.NET Core, formando una arquitectura moderna y eficiente.
 
+## Despliegue en Azure
+
+Esta aplicación está lista para desplegarse en **Microsoft Azure**. Consulta la [Guía Completa de Despliegue en Azure](AZURE-DEPLOYMENT.md) para instrucciones detalladas.
+
+### Opciones de Despliegue Disponibles:
+
+1. **Azure Static Web Apps** (Recomendado - Gratis)
+   - Despliegue automático desde GitHub
+   - SSL gratis incluido
+   - CDN global para mejor rendimiento
+   - Ver [guía completa](AZURE-DEPLOYMENT.md#opción-1-azure-static-web-apps-recomendado)
+
+2. **Azure App Service**
+   - Mayor control y funcionalidades avanzadas
+   - Escalado automático disponible
+   - Soporte para APIs backend
+   - Ver [guía completa](AZURE-DEPLOYMENT.md#opción-2-azure-app-service)
+
+### Archivos de Configuración Incluidos:
+
+- ✅ `.github/workflows/azure-static-web-apps.yml` - CI/CD para Static Web Apps
+- ✅ `.github/workflows/azure-app-service.yml` - CI/CD para App Service
+- ✅ `TaskManager1/staticwebapp.config.json` - Configuración de Static Web Apps
+- ✅ `TaskManager1/web.config` - Configuración para IIS/Azure App Service
+- ✅ `appsettings.json` - Configuración de la aplicación
+
+### Inicio Rápido:
+
+```bash
+# 1. Crea un recurso en Azure (Static Web App o App Service)
+# 2. Configura los secrets en GitHub
+# 3. Haz push a la rama main
+git push origin main
+
+# ¡GitHub Actions desplegará automáticamente tu aplicación! 🚀
+```
+
+Para instrucciones paso a paso, consulta [AZURE-DEPLOYMENT.md](AZURE-DEPLOYMENT.md).
+
 ## Funcionalidades Futuras
 
 - [ ] Almacenamiento persistente en navegador (LocalStorage)
@@ -181,6 +220,7 @@ Todo esto se comunica a través de la web con el servidor ASP.NET Core, formando
 - [ ] Backend con base de datos
 - [ ] Autenticación de usuarios
 - [ ] Sincronización en múltiples dispositivos
+- [x] Integración con Azure (Static Web Apps y App Service)
 
 ## Contribución
 
@@ -213,9 +253,12 @@ Si encuentras problemas:
 ## Links Útiles
 
 - [Documentación oficial de Blazor](https://learn.microsoft.com/es-es/aspnet/core/blazor/)
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 - [Guía de Git](https://git-scm.com/doc)
+- [Azure Static Web Apps](https://docs.microsoft.com/azure/static-web-apps/)
+- [Azure App Service](https://docs.microsoft.com/azure/app-service/)
+- [Guía de Despliegue en Azure](AZURE-DEPLOYMENT.md)
 
 ---
 
