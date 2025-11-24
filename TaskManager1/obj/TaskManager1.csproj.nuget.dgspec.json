@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mcctr\\source\\repos\\TaskManager1\\TaskManager1\\TaskManager1.csproj": {}
+    "/home/runner/work/task-managment/task-managment/TaskManager1/TaskManager1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mcctr\\source\\repos\\TaskManager1\\TaskManager1\\TaskManager1.csproj": {
+    "/home/runner/work/task-managment/task-managment/TaskManager1/TaskManager1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mcctr\\source\\repos\\TaskManager1\\TaskManager1\\TaskManager1.csproj",
+        "projectUniqueName": "/home/runner/work/task-managment/task-managment/TaskManager1/TaskManager1.csproj",
         "projectName": "TaskManager1",
-        "projectPath": "C:\\Users\\mcctr\\source\\repos\\TaskManager1\\TaskManager1\\TaskManager1.csproj",
-        "packagesPath": "C:\\Users\\mcctr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mcctr\\source\\repos\\TaskManager1\\TaskManager1\\obj\\",
+        "projectPath": "/home/runner/work/task-managment/task-managment/TaskManager1/TaskManager1.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/task-managment/task-managment/TaskManager1/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mcctr\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -134,7 +127,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

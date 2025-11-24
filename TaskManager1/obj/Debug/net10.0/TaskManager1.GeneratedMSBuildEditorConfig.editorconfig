@@ -17,45 +17,45 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = TaskManager1
 build_property.RootNamespace = TaskManager1
-build_property.ProjectDir = C:\Users\mcctr\source\repos\TaskManager1\TaskManager1\
+build_property.ProjectDir = /home/runner/work/task-managment/task-managment/TaskManager1/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\mcctr\source\repos\TaskManager1\TaskManager1
+build_property.MSBuildProjectDirectory = /home/runner/work/task-managment/task-managment/TaskManager1
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/App.razor]
+[/home/runner/work/task-managment/task-managment/TaskManager1/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[/home/runner/work/task-managment/task-managment/TaskManager1/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+[/home/runner/work/task-managment/task-managment/TaskManager1/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/NotFound.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
+[/home/runner/work/task-managment/task-managment/TaskManager1/Pages/NotFound.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTm90Rm91bmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+[/home/runner/work/task-managment/task-managment/TaskManager1/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvV2VhdGhlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/_Imports.razor]
+[/home/runner/work/task-managment/task-managment/TaskManager1/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Layout/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-4lytmr8dxr
+[/home/runner/work/task-managment/task-managment/TaskManager1/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ijsscogqs7
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-d2xns2a2za
+[/home/runner/work/task-managment/task-managment/TaskManager1/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L05hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-smzagztubt
