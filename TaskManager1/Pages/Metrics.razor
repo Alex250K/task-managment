@@ -1,0 +1,165 @@
+@page "/Metrics"
+@using TaskManager1
+@inject TaskService TaskService
+@implements IDisposable
+
+<PageTitle>Metrics</PageTitle>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dashboard</h1>
+        <div class="d-flex gap-2">
+            <select class="form-select" @bind="selectedPeriod">
+                <option value="All">All Time</option>
+                <option value="Today">Today</option>
+                <option value="Week">This Week</option>
+                <option value="Month">This Month</option>
+            </select>
+            <select class="form-select" @bind="selectedType">
+                <option value="All">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Process">In Process</option>
+                <option value="Completed">Completed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Tasks</div>
+                <div class="card-body">
+                    <h3 class="card-title">@FilteredTasks.Count()</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Completed</div>
+                <div class="card-body">
+                    <h3 class="card-title">@FilteredTasks.Count(t => t.Status == "Completed")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Pending</div>
+                <div class="card-body">
+                    <h3 class="card-title">@FilteredTasks.Count(t => t.Status == "Pending")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Completion Rate</div>
+                <div class="card-body">
+                    <h3 class="card-title">@CompletionRate%</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Task Distribution</div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        @foreach (var status in new[] { "Pending", "Process", "Revision", "Completed", "Canceled" })
+                        {
+                            var count = FilteredTasks.Count(t => t.Status == status);
+                            var percentage = TotalFiltered > 0 ? (count * 100.0 / TotalFiltered) : 0;
+                            <div class="chart-bar-row mb-2">
+                                <div class="d-flex justify-content-between">
+                                    <span>@status</span>
+                                    <span>@count</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar @GetStatusColor(status)" role="progressbar" style="width: @percentage%" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Recent Activity</div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var task in FilteredTasks.OrderByDescending(t => t.CreatedAt).Take(5))
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @task.Title
+                            <span class="badge @GetBadgeColor(task.Status) rounded-pill">@task.Status</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string selectedPeriod = "All";
+    private string selectedType = "All";
+
+    private IEnumerable<TodoItem> FilteredTasks
+    {
+        get
+        {
+            IEnumerable<TodoItem> tasks = TaskService.Tasks;
+
+            // Filter by Period
+            if (selectedPeriod == "Today")
+                tasks = tasks.Where(t => t.CreatedAt.Date == DateTime.Today);
+            else if (selectedPeriod == "Week")
+                tasks = tasks.Where(t => t.CreatedAt >= DateTime.Today.AddDays(-7));
+            else if (selectedPeriod == "Month")
+                tasks = tasks.Where(t => t.CreatedAt >= DateTime.Today.AddDays(-30));
+
+            // Filter by Type
+            if (selectedType != "All")
+                tasks = tasks.Where(t => t.Status == selectedType);
+
+            return tasks;
+        }
+    }
+
+    private int TotalFiltered => FilteredTasks.Count();
+
+    private int CompletionRate => TotalFiltered > 0 
+        ? (int)(FilteredTasks.Count(t => t.Status == "Completed") * 100.0 / TotalFiltered) 
+        : 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await TaskService.InitializeAsync();
+        TaskService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        TaskService.OnChange -= StateHasChanged;
+    }
+
+    private string GetStatusColor(string status) => status switch
+    {
+        "Pending" => "bg-warning",
+        "Process" => "bg-primary",
+        "Revision" => "bg-info",
+        "Completed" => "bg-success",
+        "Canceled" => "bg-danger",
+        _ => "bg-secondary"
+    };
+
+    private string GetBadgeColor(string status) => status switch
+    {
+        "Pending" => "bg-warning text-dark",
+        "Process" => "bg-primary",
+        "Revision" => "bg-info text-dark",
+        "Completed" => "bg-success",
+        "Canceled" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}

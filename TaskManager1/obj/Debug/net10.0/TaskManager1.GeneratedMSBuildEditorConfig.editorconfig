@@ -40,12 +40,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/NotFound.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
+[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/Metrics.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWV0cmljcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+[C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/Pages/NotFound.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mcctr/source/repos/TaskManager1/TaskManager1/_Imports.razor]

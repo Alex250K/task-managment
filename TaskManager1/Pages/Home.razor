@@ -186,13 +186,13 @@ else
     private bool modal = false;
     private bool modalAddForm = false;
 
-    private string GetTaskCssClass(Task task)
+    private string GetTaskCssClass(TodoItem task)
     {
-        return task.IsCompleted ? "completed-task" : "pending-task";
+        return task.Status == "Completed" ? "completed-task" : "pending-task";
     }
 
-
-    private List<TodoItem> tasks = new();
+    // Use TaskService.Tasks instead of local list
+    private IEnumerable<TodoItem> tasks => TaskService.Tasks;
 
     private string modalTitle { get; set; } = string.Empty;
     private string modalStatus { get; set; } = "Pending";
@@ -233,10 +233,16 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        tasks = await TaskService.LoadTasksAsync();
+        await TaskService.InitializeAsync();
+        TaskService.OnChange += StateHasChanged;
     }
 
-    private async void EditTodoItem(TodoItem todoItem)
+    public void Dispose()
+    {
+        TaskService.OnChange -= StateHasChanged;
+    }
+
+    private void EditTodoItem(TodoItem todoItem)
     {
         modalTitle = todoItem.Title;
         modalStatus = todoItem.Status;
@@ -249,33 +255,38 @@ else
     {
         if (!string.IsNullOrWhiteSpace(modalNewTitle))
         {
-            tasks.Add(new TodoItem { Title = modalNewTitle.Trim(), Importance = modalNewImportance, Status = modalNewStatus });
-            await SaveTasks();
+            var newTask = new TodoItem { Title = modalNewTitle.Trim(), Importance = modalNewImportance, Status = modalNewStatus, CreatedAt = DateTime.Now };
+            await TaskService.AddTaskAsync(newTask);
             modalAddForm = false;
+            // Reset form
+            modalNewTitle = string.Empty;
+            modalNewStatus = "Pending";
+            modalNewImportance = "Media";
         }
     }
 
     private async Task RemoveTask(TodoItem task)
     {
-        tasks.Remove(task);
-        await SaveTasks();
+        await TaskService.DeleteTaskAsync(task);
     }
 
-    private async Task SaveTasks() => await TaskService.SaveTasksAsync(tasks);
+    // private async Task SaveTasks() => await TaskService.SaveTasksAsync(tasks); // No longer needed directly
 
-    private async void UpdateTask()
+    private async Task UpdateTask()
     {
-        tasks.RemoveAll((task) => modalCreatedAt == task.CreatedAt);
-        tasks.Add(new TodoItem()
+        // Find original task to update
+        var taskToUpdate = tasks.FirstOrDefault(t => t.CreatedAt == modalCreatedAt);
+        if (taskToUpdate != null)
         {
-            Title = modalTitle,
-            Status = modalStatus,
-            CreatedAt = modalCreatedAt,
-            Importance = modalImportance,
-            UserName = modalUserName
-        });
+            // Update properties
+            taskToUpdate.Title = modalTitle;
+            taskToUpdate.Status = modalStatus;
+            taskToUpdate.Importance = modalImportance;
+            taskToUpdate.UserName = modalUserName;
+            
+            await TaskService.UpdateTaskAsync(taskToUpdate);
+        }
         modal = false;
-        await TaskService.SaveTasksAsync(tasks);
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
