@@ -162,6 +162,50 @@ Integración con gráficos JS para visualización de datos
 
 <img width="501" height="343" alt="image" src="https://github.com/user-attachments/assets/1508682b-42a3-425c-a900-ef47451145d9" />
 
+## Upgrade Metrics Dashboard
+
+Goal Description
+Upgrade the @Metrics.razor dashboard to be dynamic, practical, and real-time. This involves refactoring 
+C#TaskService to manage state and notify components of changes, updating @Home.razor to use this service, and enhancing 
+@Metrics.razor with filters and charts.
+
+## Proposed Changes
+Services
+[MODIFY] C#TaskService.cs
+- Add a private List<TodoItem> _tasks.
+- Add an event event Action OnChange.
+- Add methods GetTasks(), AddTask(), UpdateTask(), DeleteTask() that modify _tasks, save to localStorage, and invoke OnChange.
+- Initialize _tasks in a InitializeAsync() method or similar.
+
+  ## Pages
+  [MODIFY] @Home.razor  
+- Remove local tasks list management.
+- Use C#TaskService methods for all CRUD operations.
+- Subscribe to TaskService.OnChange to re-render when tasks change (if needed, though Home is the primary modifier).
+
+[MODIFY] @Metrics.razor
+
+- Inject @TaskService
+- Subscribe to TaskService.OnChange in OnInitialized.
+- Implement Dispose to unsubscribe.
+- Add filters for Time Period (All Time, Today, Week, Month) and Task Type (All, Pending, Completed, etc.).
+- Add a simple CSS-based Bar Chart to visualize task distribution.
+- Calculate metrics dynamically from TaskService.Tasks.
+
+  ## Models
+  - Ensure TodoItem has necessary fields (checked, it has CreatedAt, Status, Importance).
+
+  # Verification Plan
+  Manual Verification
+ 1. Open two browser windows/tabs (if possible) or just switch between Home and Metrics.
+ 2. Add a task in Home.
+ 3. Verify Metrics updates immediately (real-time).
+ 4. Check filters on Metrics page.
+ 5. Verify Bar Chart renders correctly.
+
+<img width="1561" height="787" alt="image" src="https://github.com/user-attachments/assets/e9a3927e-2a63-4943-80a1-5703b368c768" />
+```
+  
 Este diagrama muestra cómo se conectan los componentes clave de la aplicación Blazor WebAssembly:
 - App.razor como punto de entrada
 - MainLayout.razor como diseño base
