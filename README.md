@@ -67,37 +67,45 @@ La aplicación estará disponible en: `https://localhost:7001`
 \`\`\`
 TaskManager1/
 ```
-│
-├── Dependencies/                  # Referencias externas necesarias para compilar y ejecutar el proyecto
-│   ├── Connected Services/       # Servicios conectados como APIs externas o Azure
-│   ├── Analyzers/                # Herramientas que analizan el código para mejorar calidad y estilo
-│   ├── Frameworks/               # Frameworks base como .NET Core o ASP.NET
-│   └── Packages/                 # Paquetes NuGet instalados (como Entity Framework, etc.)
-│
-├── Properties/
-│   └── launchSettings.json       # Configuración de perfiles de ejecución (puertos, entorno, etc.)
-│
-├── wwwroot/                      # Carpeta pública para archivos estáticos
-│   └── sample-data/              # Datos de ejemplo y recursos visuales
-│       ├── ChartUsBlazorInterop.js  # Script JS para interoperabilidad con Blazor (gráficas, etc.)
-│       ├── favicon.png              # Ícono del sitio web
-│       ├── icon-192.png             # Ícono para dispositivos móviles
-│       └── index.html               # Página HTML base (usualmente para SPA o pruebas)
-│
-├── Layout/
-│   └── MainLayout.razor          # Componente de diseño principal (estructura de la interfaz)
-│
-├── Pages/
-│   ├── StatusEnum.cs             # Enumeración para estados de tareas (ej. Pendiente, Completado)
-│   └── TodoItem.cs               # Modelo de datos para una tarea (título, estado, fecha, etc.)
-│
-├── Services/
-│   ├── App.razor                 # Punto de entrada de la aplicación Blazor
-│   ├── libman.json               # Configuración de librerías externas (JS, CSS) vía LibMan
-│   ├── msbuild.binlog            # Archivo de registro de compilación (útil para depuración)
-│   ├── Program.cs                # Configuración inicial del host y servicios (como DI, rutas)
-│
-└── (Otros archivos del proyecto)
+/TaskManager1/
+├── TaskManager1.sln           # (Nombre de la solución)
+└── /TaskManager1/             # Carpeta principal del proyecto
+    ├── **Connected Services** # (Generalmente ignorado o puede contener archivos de configuración)
+    ├── **Dependencies** # (Ignorado, manejado por el .csproj y NuGet)
+    ├── **Properties** # Contiene AssemblyInfo.cs o launchSettings.json
+    ├── **wwwroot** # Recursos estáticos de la web
+    │   ├── **css**
+    │   │   ├── app.css
+    │   │   └── site.css
+    │   ├── **lib** # Librerías estáticas de terceros (ej. Bootstrap, jQuery)
+    │   │   └── bootstrap/
+    │   ├── sample-data/       # Datos de ejemplo
+    │   │   └── weather.json
+    │   ├── ChartJsBlazorInterop.js # Archivo JavaScript de interop
+    │   ├── favicon.png
+    │   ├── icon-192.png
+    │   └── index.html         # Archivo de inicio del cliente (WebAssembly)
+    ├── **Layout** # Componentes de diseño
+    │   ├── MainLayout.razor
+    │   └── NavMenu.razor
+    ├── **Models** # Clases de datos y modelos
+    │   ├── StatusEnum.cs      # Enum para estados
+    │   └── TodoItem.cs        # Clase de modelo
+    ├── **Pages** # Páginas ruteables (Componentes principales)
+    │   ├── Counter.razor
+    │   ├── Home.razor
+    │   ├── Metrics.razor
+    │   └── NotFound.razor
+    ├── **Services** # Lógica de negocio e interacción con datos
+    │   └── TaskService.cs     # Servicio de gestión de tareas
+    ├── _Imports.razor         # Directivas de importación a nivel de proyecto
+    ├── App.razor              # Componente raíz de la aplicación
+    ├── libman.json            # Configuración de LibMan (gestor de librerías estáticas)
+    ├── msbuild.binlog         # (Ignorado)
+    ├── Program.cs             # Punto de entrada de la aplicación
+    └── TaskManager1.csproj    # Archivo de configuración del proyecto C#
+.gitignore                     # Archivo crucial (ver siguiente sección)
+README.md                      # Descripción y configuración del proyecto
 ```
 
 🚀 Cómo Ejecutar el Proyecto
